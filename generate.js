@@ -1,6 +1,16 @@
 const fs = require('fs')
 
-let splitter = '================================================================================================================='
+// input values here
+let whatToGenerate = {
+    // users: 1, // always 1
+    collections: 1,
+    cronsPerCollection: 5,
+    socialUnitsPerSocialNetwork: 5
+}
+
+
+
+
 
 function generateRandomNumber(index, lastDigits, format) {
     let idArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -92,14 +102,13 @@ let usersStorage = [];
 
 function collection(howManyCollections, howManyCrons, howManySocialUnits) {
     let user = generateRandomNumber(2, 1, true)
-
-    /* let userId = generateRandomNumber(2, 1, true)
-    let userUsername = 'Eimantas'
-    let userPicture = ':)'
-    let userVerified = 'yes'
-    let userCollectionList = []
-    let userSocialNetworkList = []
-    let user = userToUsersStorage(id, username, picture, verified, collectionList, socialNetworkList) */
+        /* let userId = generateRandomNumber(2, 1, true)
+        let userUsername = 'Eimantas'
+        let userPicture = ':)'
+        let userVerified = 'yes'
+        let userCollectionList = []
+        let userSocialNetworkList = []
+        let user = userToUsersStorage(userId, userUsername, userPicture, userVerified, userCollectionList, userSocialNetworkList) */
 
     let collections = [];
     let cronList = [];
@@ -171,17 +180,21 @@ function collection(howManyCollections, howManyCrons, howManySocialUnits) {
 
 
     // ISDAVIMAS
-
-    console.log('______COLLECTIONS______')
+    console.log('')
+    console.log('________________COLLECTIONS________________')
+    console.log('')
     console.log(collections); // atiduoda kolekcijas
-    console.log(splitter)
-    console.log('______CRONS______')
+    console.log('')
+    console.log('________________CRONS________________')
+    console.log('')
     console.log(cronStorage) // atiduoda cron'u lista
-    console.log(splitter)
-    console.log('______NETWORKS______')
+    console.log('')
+    console.log('________________NETWORKS________________')
+    console.log('')
     console.log(socialNetworkStorage) // atiduoda lista soc unitu
-    console.log(splitter)
-    console.log('______UNITS______')
+    console.log('')
+    console.log('________________UNITS________________')
+    console.log('')
     console.log(socialUnitsStorage) // atiduoda unit'u lista
 
 
@@ -251,12 +264,7 @@ function makeid(length) {
 
 // leidimas
 
-let whatToGenerate = {
-    users: 1,
-    collections: 1,
-    cronsPerCollection: 2,
-    socialUnitsPerSocialNetwork: 2
-}
+
 
 
 collection(whatToGenerate.collections, whatToGenerate.cronsPerCollection, whatToGenerate.socialUnitsPerSocialNetwork)
