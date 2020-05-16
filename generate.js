@@ -3,9 +3,9 @@ const fs = require('fs')
 // input values here
 let whatToGenerate = {
     // users: 1, // always 1
-    collections: 1,
-    cronsPerCollection: 5,
-    socialUnitsPerSocialNetwork: 5
+    collections: 5,
+    cronsPerCollection: 500,
+    socialUnitsPerSocialNetwork: 500
 }
 
 
@@ -92,6 +92,13 @@ function generateUser(id, username, picture, verified, collectionList, socialNet
     }
 }
 
+function generateUnit(id, name) {
+    return {
+        id: id,
+        name: name
+    }
+}
+
 
 
 let cronStorage = []
@@ -148,8 +155,10 @@ function collection(howManyCollections, howManyCrons, howManySocialUnits) {
 
     // SOCIALNETWORK ATSKIRAI ARRAY
     for (let i = 0; i < howManySocialUnits; i++) {
+
         let unitId = generateRandomNumber(6, i, true)
-        socialUnitsStorage.push(unitId);
+        let unit = generateUnit(unitId, 'unit name')
+        socialUnitsStorage.push(unit);
     }
 
     for (let socialNetwork in socialNetworkList) {
