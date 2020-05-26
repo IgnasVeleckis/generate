@@ -3,9 +3,9 @@ const fs = require('fs')
 // input values here
 let whatToGenerate = {
     // users: 1, // always 1
-    collections: 5,
-    cronsPerCollection: 500,
-    socialUnitsPerSocialNetwork: 500
+    collections: 2,
+    cronsPerCollection: 3,
+    socialUnitsPerSocialNetwork: 3
 }
 
 
@@ -92,12 +92,20 @@ function generateUser(id, username, picture, verified, collectionList, socialNet
     }
 }
 
-function generateUnit(id, name) {
+function generateUnit(id, socialUnitId, name, socialNetworkId, accessToken, refreshToken) { // id, socialUnitId, name, socialNetworkId,accessToken,refreshToken
     return {
-        id: id,
-        name: name
+        _id: id,
+        socialUnitId: socialUnitId,
+        name: name,
+        type: 'SOCIAL_UNIT_TYPE',
+        socialNetworkId: socialNetworkId,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        socialNetworkType: 'SOCIAL_NETWORK_TYPE'
     }
 }
+
+
 
 
 
@@ -119,10 +127,18 @@ function collection(howManyCollections, howManyCrons, howManySocialUnits) {
 
     let collections = [];
     let cronList = [];
-    let socialNetworkList = [
-        'FACEBOOK',
-        'TWITTER'
+    let socialNetworkList = [{
+            name: 'FACEBOOK',
+            id: `ObjectId('700000000000000000000000)`
+        },
+        {
+            name: 'TWITTER',
+            id: `ObjectId('700000000000000000000001)`
+        },
+
+
     ];
+
 
     for (let i = 0; i < howManyCollections; i++) {
         let id = generateRandomNumber(1, i, true)
@@ -132,7 +148,7 @@ function collection(howManyCollections, howManyCrons, howManySocialUnits) {
             crons.push(cronId);
         }
         cronList = crons;
-        let newCollection = generateCollection(id, user, cronList, socialNetworkList);
+        let newCollection = generateCollection(id, user, cronList, socialNetworkList.name);
         collections.push(newCollection)
     }
 
@@ -154,16 +170,19 @@ function collection(howManyCollections, howManyCrons, howManySocialUnits) {
 
 
     // SOCIALNETWORK ATSKIRAI ARRAY
-    for (let i = 0; i < howManySocialUnits; i++) {
-
-        let unitId = generateRandomNumber(6, i, true)
-        let unit = generateUnit(unitId, 'unit name')
-        socialUnitsStorage.push(unit);
+    for (let socialNetwork in socialNetworkList) {
+        let socNetworkId = socialNetworkList[socialNetwork].id //generateRandomNumber(7, socialNetwork, true)
+        for (let i = 0; i < howManySocialUnits; i++) {
+            let unitId = generateRandomNumber(6, i, true)
+            let _id = generateRandomNumber(8, i, true)
+            let unit = generateUnit(_id, unitId, socialNetworkList[socialNetwork].name, socNetworkId, 'accessToken', 'refreshToken') // id, socialUnitId, name, socialNetworkId,accessToken,refreshToken
+            socialUnitsStorage.push(unit);
+        }
     }
 
     for (let socialNetwork in socialNetworkList) {
         let socialId = generateRandomNumber(4, socialNetwork, true)
-        let socialName = socialNetworkList[socialNetwork];
+        let socialName = socialNetworkList[socialNetwork].name;
         let socialNetworkAccountId = generateRandomNumber(5, 0, true)
         let socialNetworkType = 'type'
         let socialPicture = 'pic'
